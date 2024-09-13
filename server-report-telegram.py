@@ -34,7 +34,7 @@ if __name__ == "__main__":
     ram = get_ram_usage()
 
     disk = "sda1"
-    dirs = "/var/lib/wazo/sounds/tenants/07fcd189-6180-471e-a36a-49461a6eae2c/monitor"
+    dirs = "/path/to/monitor"
 
     disk_out = command(f"df -h | grep {disk}" + " | awk '{print $4 \" (\"$5\")\"}'").replace("\n", "")
     dirs_out = command(f"du -h --max-depth=1 {dirs}" + " | awk '{print $1}'").replace("\n", "")
