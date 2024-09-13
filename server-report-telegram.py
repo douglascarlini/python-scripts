@@ -2,19 +2,7 @@ import subprocess
 import requests
 import psutil
 import socket
-import json
-import os
 import re
-
-BOT_TOKEN = ''
-CHAT_ID = ''
-
-file_path = 'report.json'
-results = []
-
-if os.path.exists(file_path):
-    with open(file_path, 'r') as file:
-        results = json.load(file)
 
 def get_cpu_usage():
     return psutil.cpu_percent(interval=1)
@@ -46,7 +34,7 @@ if __name__ == "__main__":
     ram = get_ram_usage()
 
     disk = "sda1"
-    dirs = "/path/to/monitored/folder"
+    dirs = "/var/lib/wazo/sounds/tenants/07fcd189-6180-471e-a36a-49461a6eae2c/monitor"
 
     disk_out = command(f"df -h | grep {disk}" + " | awk '{print $4 \" (\"$5\")\"}'").replace("\n", "")
     dirs_out = command(f"du -h --max-depth=1 {dirs}" + " | awk '{print $1}'").replace("\n", "")
@@ -70,4 +58,4 @@ if __name__ == "__main__":
     text += f"`{icon['cpu']} CPU: {cpu:.1f}% | {icon['ram']} RAM: {ram:.1f}%`\n"
     text += f"`{icon['sda']} SDA: {disk_out} | {icon['log']} LOG: {logs_out} |  {icon['wav']} WAV: {dirs_out}`"
 
-    send_telegram_message(BOT_TOKEN, CHAT_ID, text)
+    send_telegram_message('', '', text)
